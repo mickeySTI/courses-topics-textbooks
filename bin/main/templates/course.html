@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:each = "course: ${courses}">
+	<title th:text="${course.name}">A course</title>
+</head>
+<body>
+
+	<header>
+		<h1>A Single Course</h1>
+	</header>
+
+	<main th:each = "course: ${courses}">
+		<p th:text="${course.name}"></p>
+		<p th:text="${course.description}"></p>
+	</main>
+
+	<footer>
+		<p><a href="/show-courses">Back to home</a></p>
+		<small>&copy WCCI 2020</small>
+	</footer>
+
+</body>
+</html>

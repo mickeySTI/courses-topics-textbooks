@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+
+
+<head>
+ <html xmlns:th="http://www.thymeleaf.org">
+</head>
+
+<body>
+
+    <header>
+        <h1>A List of All Courses</h1>
+    </header>
+
+    <main th:each="course: ${courses}">
+        <ul>
+            <li >
+            <a th:href="@{/course(id=${course.id})}" th:text="${course.name}"></a>
+             </li>
+        </ul>
+    </main>
+
+    <footer>
+        <small>&copy WCCI 2020</small>
+    </footer>
+
+</body>
+
+</html>
