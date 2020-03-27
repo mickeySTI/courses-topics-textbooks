@@ -9,6 +9,10 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Topic {
+	
+	// need to specify owning or non owning side 
+	@ManyToMany(mappedBy = "topics") // Not owning side , use mappedBy to identify non owning side 
+	private Collection<Course> courses;
 
 	// default no args constructor required by jpa
 	public Topic() { // need default constructor for entity
@@ -49,17 +53,12 @@ public class Topic {
 	private String name;
 	
 	
-	// need to specify owning or non owning side 
-	@ManyToMany(mappedBy = "topics") // Not owning side , use mappedBy to identify non owning side 
-	private Collection<Course> courses;
+
 	
 	public Collection<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Collection<Course> courses) {
-		this.courses = courses;
-	}
 
 	public String getName() {
 		return name;

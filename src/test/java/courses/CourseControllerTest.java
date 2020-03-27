@@ -14,7 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
-
+//This test is to make sure the models/model is working
 public class CourseControllerTest {
 	
 	
@@ -44,6 +44,7 @@ public class CourseControllerTest {
 	
 	@Mock
 	private Course course;
+	Long courseId;
 	
 	@Mock
 	private Course anotherCourse;
@@ -146,6 +147,29 @@ public class CourseControllerTest {
 		when(courseRepo.save(newCourse)).thenReturn(newCourse);
 		
 	}
+	
+	
+	
+	@Test
+	public void shouldRemoveCourseFromModelByName() {
+		String courseName = course.getName();
+		when(courseRepo.findByName(courseName)).thenReturn(course);
+		underTest.deleteCourseByName(courseName);
+		verify(courseRepo).delete(course);
+		
+		
+	}
+	
+	@Test
+	public void shouldRemoveCourseFromModelById() {
+		underTest.deleteCourseById(courseId);
+	
+		verify(courseRepo).deleteById(courseId);
+		
+		
+	}
+	
+
 	
 	
 	

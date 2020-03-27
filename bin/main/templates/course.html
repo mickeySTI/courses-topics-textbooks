@@ -9,10 +9,22 @@
 		<h1>A Single Course</h1>
 	</header>
 
-	<main th:each = "course: ${courses}">
+	<div th:each = "course: ${courses}">
 		<p th:text="${course.name}"></p>
 		<p th:text="${course.description}"></p>
-	</main>
+	
+	
+	<form method="post">
+    
+
+              <!-- this is how/where the request mapping is used   --> 
+              <!-- name has to match the variable name set for the Id -->
+      <button type="submit" th:value="${course.id}" name ="courseId" th:formaction="@{del-course}">Delete</button>
+
+
+  </form>
+	
+	</div>	
 
 	<footer>
 		<p><a href="/show-courses">Back to home</a></p>

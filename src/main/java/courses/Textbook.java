@@ -41,7 +41,7 @@ public class Textbook {
 	private String title;
 	
 	
-	
+	//Many Courses Can Reference the same textbook
 	@ManyToOne
 	private Course course;
 	

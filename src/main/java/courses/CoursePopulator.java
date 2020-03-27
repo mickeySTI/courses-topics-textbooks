@@ -26,7 +26,7 @@ public class CoursePopulator  implements CommandLineRunner {
 		java = topicRepo.save(java);
 		
 		Topic spring = new Topic("Spring");
-		java = topicRepo.save(spring);
+		spring = topicRepo.save(spring);
 		
 		Topic tdd = new Topic("TDD");
 		tdd = topicRepo.save(tdd);

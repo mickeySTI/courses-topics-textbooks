@@ -22,7 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
+//This test the controller views to make sure the pages/templates come up like they should
 @RunWith(SpringRunner.class)
 @WebMvcTest(CourseController.class)
 public class CourseControllerMockMVCTest {

@@ -4,6 +4,7 @@ package courses;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
@@ -18,7 +19,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
-
+// This test the CRUD Repos
 @RunWith(SpringJUnit4ClassRunner.class) // Need this annotation any time we test JPA
 @DataJpaTest // Need this annotation any time we test JPA
 public class JPAMappingTest {
@@ -165,6 +166,24 @@ public class JPAMappingTest {
 	
 	
 	
+	@Test
+	public void shouldSortCourses() {
+		Course ooLanguages = new Course("OO Languages","description");
+		ooLanguages = courseRepo.save(ooLanguages);
+		
+		Course scriptingLanguages = new Course("scripting Languages","description");
+		scriptingLanguages = courseRepo.save(scriptingLanguages);
+		
+		entityManager.flush();  
+		entityManager.clear();
+		
+		Collection<Course> sortedCourses = courseRepo.findAllByOrderByNameAsc();
+		assertThat(sortedCourses, contains( ooLanguages,scriptingLanguages));
+		
+		
+		}
+		
+	}
 	
 	
 	
@@ -190,4 +209,3 @@ public class JPAMappingTest {
 	
 	
 	
-}

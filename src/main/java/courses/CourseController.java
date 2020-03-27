@@ -1,5 +1,6 @@
 package courses;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ public class CourseController {
 	public String findOneCourse(@RequestParam(value="id")long id, Model model) throws CourseNotFoundException {
 		Optional<Course> course = courseRepo.findById(id);
 		if(course.isPresent()) {
-			model.addAttribute("courses", course.get());
+			model.addAttribute("course", course.get());
 			return "course"; // name of template
 		}
 		throw new CourseNotFoundException();
@@ -48,7 +49,7 @@ public class CourseController {
 	public String findOneTopic(@RequestParam(value="id")long id, Model model) throws TopicNotFoundException {
 		Optional<Topic> topic = topicRepo.findById(id);
 		if(topic.isPresent()) {
-			model.addAttribute("topics", topic.get());
+			model.addAttribute("topic", topic.get());
 			model.addAttribute("courses", courseRepo.findByTopicsContains(topic.get())); // Need this for query
 			return "topic";
 		}
@@ -84,18 +85,68 @@ public class CourseController {
 
 
 	
-	// Part 2 
+	// Part 2 , API
 	
-	@RequestMapping("/add-course")
+	@RequestMapping("/add-course")												//String
 	public String addCourse(String courseName, String courseDescription, String topicName) {
+		Topic topic = topicRepo.findByName(topicName);
+		Course newCourse = courseRepo.findByName(courseName);
 		
-		return"";
+		
+		if(newCourse==null) {
+																//Object		
+			newCourse = new Course(courseName, courseDescription,topic);
+			courseRepo.save(newCourse);
+		}
+		
+		//page refresh, no spaces
+		return"redirect:/show-courses";
+	}
+	
+	
+	
+	@RequestMapping("/delete-course")
+	public String deleteCourseByName(String courseName) {
+		
+		if(courseRepo.findByName(courseName) != null) {
+			Course deletedCourse = courseRepo.findByName(courseName);
+			courseRepo.delete(deletedCourse);
+		}
+		
+				//page refresh, no spaces
+				return"redirect:/show-courses";
+	}
+
+	//deleting course by Id
+	@RequestMapping("/del-course")
+	public String deleteCourseById(Long courseId) {
+			courseRepo.deleteById(courseId);
+				//page refresh, no spaces
+				return"redirect:/show-courses";
+	}
+
+	
+	
+	@RequestMapping("/find-by-topic")
+	public String findCoursesByTopic(String topicName, Model model) {
+		Topic topic = topicRepo.findByName(topicName);
+		model.addAttribute("courses",courseRepo.findByTopicsContains(topic));
+		
+		return"/topic";
+	}
+	
+	
+	@RequestMapping("/sort-courses")
+	public String sortCourses(Model model ) {
+		model.addAttribute("courses", courseRepo.findAllByOrderByNameAsc());
+		return "courses"; // returning temp instead of endpoint
+		
 		
 	}
 	
 	
 	
-	
+}
 	
 	
 	
@@ -108,4 +159,4 @@ public class CourseController {
 	
 	
 
-}
+
